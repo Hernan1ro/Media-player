@@ -12,22 +12,11 @@
       <h1>Big bunny Media Player.js</h1>
     </header>
     <main class="container">
-      <video class="movie">
+      <video controls class="movie">
         <source src="./assets/BigBuckBunny.mp4" />
       </video>
       <button>Play/Pause</button>
     </main>
-    <script>
-      const video = document.querySelector("video");
-      const button = document.querySelector("button");
-      function MediaPlayer(config) {
-        this.media = config.el;
-      }
-      MediaPlayer.prototype.play = function () {
-        this.media.play();
-      };
-      player = new MediaPlayer({ el: video });
-      button.onclick = () => player.play();
-    </script>
+    <script src="./assets/index.js"></script>
   </body>
 </html>
