@@ -24,25 +24,32 @@
         this.name = name;
       }
 
-      Hero.prototype.saludar = function() {
+      Hero.prototype.saludar = function () {
         console.log(`Hola, soy ${this.name}.`);
       };
 
-      const zelda = new Hero('Zelda');
-
-      // propiedades de la instancia
-      console.log('Name:', zelda.name);
-      // propiedades de la "clase"
-      console.log('Saludar:', zelda.saludar);
-
-      // propiedades heredadas ej: toString
-      console.log('toString:', zelda.toString);
-
-      // hasOwnProperty (de dónde sale toString o esto?)
+      const zelda = new Hero("Hernan");
+      console.log(`Name: ${zelda.name}`);
+      console.log(`Name: ${zelda.saludar}`);
+      console.log(`Name: ${zelda.toString}`);
+      // hasOwnProperty
       console.log(
-        'zelda.hasOwnProperty("saludar"):',
-        zelda.hasOwnProperty('saludar')
+        'zelda.hasOwnProperty("name"):',
+        zelda.hasOwnProperty("name")
       );
+      // // propiedades de la instancia
+      // console.log('Name:', zelda.name);
+      // // propiedades de la "clase"
+      // console.log('Saludar:', zelda.saludar);
+
+      // // propiedades heredadas ej: toString
+      // console.log('toString:', zelda.toString);
+
+      // // hasOwnProperty (de dónde sale toString o esto?)
+      // console.log(
+      //   'zelda.hasOwnProperty("saludar"):',
+      //   zelda.hasOwnProperty('saludar')
+      // );
 
       // inspeccionemos el prototipo del zelda
       // inspeccionemos el prototipo del Hero
