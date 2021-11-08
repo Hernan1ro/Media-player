@@ -9,44 +9,46 @@
 
     <script src="https://unpkg.com/fast-levenshtein@2.0.6/levenshtein.js"></script>
     <script>
-      // Proxy es parecido a getters y setters
-      // Usa un concepto que se llama traps: son interceptores de llamadas. A diferencia de getters, no opera sobre una propieda, si no sobre un objeto.
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy#Methods_of_the_handler_object
-
-      // Creemos un ejemplo donde interceptamos llamadas para leer una propiedad
-      // Si la propiedad existe, la regresamos
-      // Si no existe, entonces sugerimos una que pueda funcionar
-
-      // Para eso eso vamos a usar un algoritmo que se llama Levenshtein. (window.Levenshtein.get)
-      // Ejemplos de levenshtein distance (usa window.Levenshtein)
-
+      // target es mi objeto a supervisar (sus propiedades pueden ser objetos, array, funciones, u otro proxy)
       const target = {
-        red: 'Rojo',
-        green: 'Verde',
-        blue: 'Azul',
+        red: "Rojo",
+        blue: "Azul",
+        green: "Verde",
       };
-
+      // handler es un objeto con funciones (trampa) que definen las acciones a seguir cuando se accede al objeto supervisado
       const handler = {
-        get(obj, prop) {
-          if (prop in obj) {
-            return obj[prop];
+        // get es una función que recibe el objeto supervisado y la propiedad a la que se quiere acceder
+        get(objeto, propiedad) {
+          if (propiedad in objeto) {
+            // si la propiedad existe, pues retornamos su valor
+            return objeto[propiedad];
           }
 
-          const suggestion = Object.keys(obj).find(key => {
-            return Levenshtein.get(key, prop) <= 3;
+          // Si llega hasta aqui, significa que la propiedad invocada sobre el objeto no existe, por tanto, vamos a ver si podemos retornar una sugerencia
+          const sugerencia = Object.keys(objeto).find((key) => {
+            // creo un objeto con todas mis claves del objeto supervisado, y retorno aquella (nombre) que su distancia sea <= 3 tomando como base la propiedad invocada
+            return Levenshtein.get(key, propiedad) <= 3;
           });
 
-          if (suggestion) {
+          if (sugerencia) {
             console.log(
-              `${prop} no se encontró. Quisiste decir ${suggestion}?`
+              `${propiedad} no se encontró, Quizá tu querías decir ${sugerencia}`
             );
           }
 
-          return obj[prop];
+          // RETORNAMOS EL VALOR DE LA PROPIEDAD INEXISTENTE (por buenas prácticas)
+          return objeto[propiedad];
         },
       };
 
+      // 1. Proxy() es un constructor (que siempre debe utilizarse con new) que recibe dos parámetros:
+      // targer: un objeto sobre el cual se producirá la supervisión
+      // handler: un objeto con una serie de manejadores para cada una de las diferentes operaciones que se realizarán sobre el objeto pasado en el primer parámetro
+      // 2. Este constructor devuelve el objeto pasado como parámetro, pero que está siendo interceptado. Es importante tener en cuenta que Proxy() no copia el objeto, devuelve el mismo objeto, pero supervisado.
       const p = new Proxy(target, handler);
+
+      console.log(p.red);
+      console.log(p.res);
     </script>
   </body>
 </html>
