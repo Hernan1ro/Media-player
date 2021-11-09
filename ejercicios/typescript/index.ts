@@ -43,3 +43,32 @@ comodin = { type: "Wildcard" };
 // Object
 
 let someObject: object = { type: "Wildcard" };
+
+// Funciones
+
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+const sum = add(4, 5);
+
+// Funciones que regresa otras Funciones
+
+function createAdder(a: number): (number) => number {
+  return function (b: number) {
+    return b + a;
+  };
+}
+
+const addFour = createAdder(4);
+const fourPlus6 = addFour(6);
+
+// funcion que escribe el nombre completo de alguien y solo se envia un argumento
+
+function fullName(firstName: string, lastName: string = "Smith"): string {
+  return `${firstName} ${lastName}`;
+}
+
+const hernan = fullName("Agente");
+
+console.log(hernan);
