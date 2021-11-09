@@ -1,2 +1,2 @@
 # Media-player
- A project made 100% with vainilla javascript to show videos and other stuff
+ A project made almost 100% with vainilla TypeScript to show videos with ads 
